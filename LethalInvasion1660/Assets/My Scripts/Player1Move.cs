@@ -5,11 +5,12 @@ using UnityEngine;
 public class Player1Move : MonoBehaviour
 {
     private Animator Anim;
+    public float WalkSpeed = 0.001f;
 
     // Start is called before the first frame update
     void Start()
     {
-        Anim = GetComponent<Animator>();
+        Anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -18,10 +19,12 @@ public class Player1Move : MonoBehaviour
         if (Input.GetAxis("Horizontal") > 0)
         {
             Anim.SetBool("Forward", true);
+            transform.Translate(WalkSpeed, 0, 0);
         }
         if (Input.GetAxis("Horizontal") < 0)
         {
             Anim.SetBool("Backward", true);
+            transform.Translate(-WalkSpeed, 0, 0);
         }
         if (Input.GetAxis("Horizontal") == 0)
         {
