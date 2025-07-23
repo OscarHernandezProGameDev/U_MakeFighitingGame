@@ -11,6 +11,11 @@ public class Player1Move : MonoBehaviour
     private AnimatorStateInfo Player1Layer0;
     private bool CanWalkLeft = true;
     private bool CanWalkRight = true;
+    public GameObject Player1;
+    public GameObject Opponent;
+    private Vector3 OppPosition;
+    private bool FacingLeft = false;
+    private bool FacingRight = true;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +42,18 @@ public class Player1Move : MonoBehaviour
         {
             CanWalkLeft = true;
             CanWalkRight = true;
+        }
+
+        OppPosition = Opponent.transform.position;
+
+        // Flip around to face oponent
+        if (OppPosition.x > Player1.transform.position.x)
+        {
+            StartCoroutine(FaceLeft());
+        }
+        if (OppPosition.x < Player1.transform.position.x)
+        {
+            StartCoroutine(FaceRight());
         }
 
         // El tag nos indicará si nos podemos mover o no
@@ -89,5 +106,27 @@ public class Player1Move : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f);
         isJumping = false;
+    }
+
+    private IEnumerator FaceLeft()
+    {
+        if (FacingLeft)
+        {
+            FacingLeft = false;
+            FacingRight = true;
+            yield return new WaitForSeconds(0.15f);
+            Player1.transform.Rotate(0, 180, 0);
+        }
+    }
+
+    private IEnumerator FaceRight()
+    {
+        if (FacingRight)
+        {
+            FacingRight = false;
+            FacingLeft = true;
+            yield return new WaitForSeconds(0.15f);
+            Player1.transform.Rotate(0, -180, 0);
+        }
     }
 }
