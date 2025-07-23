@@ -21,6 +21,7 @@ public class Player1Move : MonoBehaviour
     void Start()
     {
         Anim = GetComponentInChildren<Animator>();
+        StartCoroutine(FaceRight());
     }
 
     // Update is called once per frame
@@ -115,7 +116,8 @@ public class Player1Move : MonoBehaviour
             FacingLeft = false;
             FacingRight = true;
             yield return new WaitForSeconds(0.15f);
-            Player1.transform.Rotate(0, 180, 0);
+            Player1.transform.Rotate(0, -180, 0);
+            Anim.SetLayerWeight(1, 0);
         }
     }
 
@@ -126,7 +128,8 @@ public class Player1Move : MonoBehaviour
             FacingRight = false;
             FacingLeft = true;
             yield return new WaitForSeconds(0.15f);
-            Player1.transform.Rotate(0, -180, 0);
+            Player1.transform.Rotate(0, 180, 0);
+            Anim.SetLayerWeight(1, 1);
         }
     }
 }
