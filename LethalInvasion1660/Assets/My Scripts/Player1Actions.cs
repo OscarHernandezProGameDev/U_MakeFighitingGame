@@ -7,6 +7,7 @@ public class Player1Actions : MonoBehaviour
     public float JumpSpeed = 1.0f;
     public GameObject Player1;
     private Animator Anim;
+    private AnimatorStateInfo Player1Layer0;
 
     public void JumpUp()
     {
@@ -34,21 +35,45 @@ public class Player1Actions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        Player1Layer0 = Anim.GetCurrentAnimatorStateInfo(0);
+
+        // Standing attacks
+        if (Player1Layer0.IsTag("Motion"))
         {
-            Anim.SetTrigger("LightPunch");
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Anim.SetTrigger("LightPunch");
+            }
+            if (Input.GetButtonDown("Fire2"))
+            {
+                Anim.SetTrigger("HeavyPunch");
+            }
+            if (Input.GetButtonDown("Fire3"))
+            {
+                Anim.SetTrigger("LightKick");
+            }
+            if (Input.GetButtonDown("Jump"))
+            {
+                Anim.SetTrigger("HeavyKick");
+            }
         }
-        if (Input.GetButtonDown("Fire2"))
+
+        // Crouching attacks
+        if (Player1Layer0.IsTag("Crouching"))
         {
-            Anim.SetTrigger("HeavyPunch");
+            if (Input.GetButtonDown("Fire3"))
+            {
+                Anim.SetTrigger("LightKick");
+            }
         }
-        if (Input.GetButtonDown("Fire3"))
+
+        // Aerial moves
+        if (Player1Layer0.IsTag("Jumping"))
         {
-            Anim.SetTrigger("LightKick");
-        }
-        if (Input.GetButtonDown("Jump"))
-        {
-            Anim.SetTrigger("HeavyKick");
+            if (Input.GetButtonDown("Jump"))
+            {
+                Anim.SetTrigger("HeavyKick");
+            }
         }
     }
 }
